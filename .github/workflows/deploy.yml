@@ -11,6 +11,7 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
+    container: node:16
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: cluster0.dxre3nn.mongodb.net
@@ -33,7 +34,7 @@ jobs:
         run: npm test
       - name: Output information
         run: |
-          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME_SECRET"
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -43,5 +44,5 @@ jobs:
           PORT: 3000
         run: |        
           echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
-          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME_SECRET"
           echo "${{ env.PORT }}"
